@@ -1,0 +1,7 @@
+com\example\assignment\config\ApplicationConfig.class
+com\example\assignment\model\Person.class
+com\example\assignment\service\PersonService.class
+com\example\assignment\controller\PersonController.class
+com\example\assignment\repository\PersonRepository.class
+com\example\assignment\AssignmentApplication.class
+com\example\assignment\service\PersonServiceImpl.class
