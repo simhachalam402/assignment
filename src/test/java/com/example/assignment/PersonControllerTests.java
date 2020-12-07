@@ -90,15 +90,16 @@ public class PersonControllerTests {
 	@Order(1)
 	public void addPerson_Json_Xml() throws JsonMappingException, JsonProcessingException, JSONException {
 		LOGGER.info("PersonControllerTests::addPerson_Json_Xml triggered >> ");
-		//Creating person details via JSON
+
 		HttpEntity<String> request = new HttpEntity<String>(personJsonObject.toString(), headers);
 		String createPersonWithJSON = restTemplate.postForObject(addPersonUrl, request, String.class);
 		JsonNode viaJSON = objectMapper.readTree(createPersonWithJSON);
 		
+		LOGGER.info("PersonControllerTests::addPerson_Json_Xml Successfully saved person in to db. {}.", createPersonWithJSON);
 		assertNotNull(createPersonWithJSON);
         assertNotNull(viaJSON);
         assertNotNull(viaJSON.path("firstName").asText());
-		
+        assertTrue(viaJSON.path("firstName").asText().equals("Johnny"));
         LOGGER.info("PersonControllerTests::addPerson_Json_Xml Successfully completed >> ");
 	}
 	
@@ -112,17 +113,22 @@ public class PersonControllerTests {
 		String createPersonWithJSON = restTemplate.postForObject(addPersonUrl, request, String.class);
 		JsonNode viaJSON = objectMapper.readTree(createPersonWithJSON);
 		
+		LOGGER.info("PersonControllerTests::editPerson_Json Successfully saved person in to db. {}.", createPersonWithJSON);
 		String personId = viaJSON.path("id").asText();
 		personJsonObject = constructJSON("Praveen_edit", "K_edit");
 		personJsonObject.put("id", personId);
 		request = new HttpEntity<String>(personJsonObject.toString(), headers);
 		restTemplate.put(updatePersonUrl.concat(personId), request, String.class);
+		LOGGER.info("PersonControllerTests::editPerson_Json Successfully updated person in to db for id: {}.", personId);
+		
 		String getPersonById = restTemplate.getForObject(fetchPersonByIdUrl.concat(personId), String.class);
+		LOGGER.info("PersonControllerTests::editPerson_Json Fetched person object after updation successfully {}.", getPersonById);
 		JsonNode editViaJSON = objectMapper.readTree(getPersonById);
 		assertNotNull(getPersonById);
         assertNotNull(editViaJSON);
         assertNotNull(editViaJSON.path("firstName").asText());
         assertEquals(editViaJSON.path("firstName").asText().toString(), "Praveen_edit");
+        assertEquals(editViaJSON.path("lastName").asText().toString(), "K_edit");
         LOGGER.info("PersonControllerTests::editPerson_Json Successfully completed >> ");
 	}
 	
@@ -134,10 +140,19 @@ public class PersonControllerTests {
 		personJsonObject = constructJSON("Ganesh", "G");
 		HttpEntity<String> request = new HttpEntity<String>(personJsonObject.toString(), headers);
 		String createPersonWithJSON = restTemplate.postForObject(addPersonUrl, request, String.class);
+		LOGGER.info("PersonControllerTests::deletePerson Successfully saved person in to db. {}.", createPersonWithJSON);
+		
 		JsonNode viaJSON = objectMapper.readTree(createPersonWithJSON);
 		String personId = viaJSON.path("id").asText();
-		
+		LOGGER.info("PersonControllerTests::deletePerson Deletion operation started on personId: {}.", personId);
 		restTemplate.delete(deletePersonUrl.concat(personId));
+		
+		try {
+			String getPersonById = restTemplate.getForObject(fetchPersonByIdUrl.concat(personId), String.class);
+		} catch(Exception ex) {
+			LOGGER.info("PersonControllerTests::deletePerson Person object is not available in db. Because it is already deleted from db. ");
+		}
+		
 		assertTrue(true);
 		LOGGER.info("PersonControllerTests::deletePerson Successfully completed >> ");
 	}
