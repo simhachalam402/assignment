@@ -38,16 +38,13 @@ public class AssignmentRepositoryTests {
 	@Order(1)
 	public void whenFindAll() {
 		LOGGER.info("whenFindAll case got triggered >> ");
-		//given
 		Person p1 = new Person("Test1", "T1");
 		Person p2 = new Person("Test2", "T2");
 		personRepository.saveAndFlush(p1);
 		personRepository.saveAndFlush(p2);
 		
-		//when
 		List<Person> personsList = personRepository.findAll();
 		
-		//then
 		assertThat(personsList.size()).isEqualTo(2);
 		assertThat(personsList.get(0)).isEqualTo(p1);
 		assertThat(personsList.get(1)).isEqualTo(p2);
@@ -58,16 +55,13 @@ public class AssignmentRepositoryTests {
 	@Order(2)
 	public void whenFindAllById() {
 		LOGGER.info("whenFindAllById case got triggered >> ");
-		//given
 		Person p3 = new Person("Test3", "T3");
 		Person p4 = new Person("Test4", "T4");
 		Person p3_book = personRepository.saveAndFlush(p3);
 		personRepository.saveAndFlush(p4);
 		
-		//when
 		Optional<Person> testPerson = personRepository.findById(p3_book.getId());
 		
-		//then
 		assertThat(testPerson.get().getFirstName()).isEqualTo(p3.getFirstName());
 		LOGGER.info("whenFindAllById case got finished >> ");
 	}
@@ -76,17 +70,14 @@ public class AssignmentRepositoryTests {
 	@Order(3)
 	public void whenDeleteById() {
 		LOGGER.info("whenDeleteById case got triggered >> ");
-		//given
 		Person p5 = new Person("Test5", "T5");
 		Person p6 = new Person("Test6", "T6");
 		Person p5_book = personRepository.saveAndFlush(p5);
 		personRepository.saveAndFlush(p6);
 		
-		//when
 		Optional<Person> testPerson = personRepository.findById(p5_book.getId());
 		if(testPerson.isPresent()) {
 			personRepository.delete(testPerson.get());
-			//then
 			Person pp = personRepository.findById(p5_book.getId()).orElse(null);
 			if(pp==null) {
 				assertThat(true);
@@ -94,7 +85,6 @@ public class AssignmentRepositoryTests {
 				assertThat(false);
 			}
 		} else {
-			//then
 			assertThat(false);
 		}
 		LOGGER.info("whenDeleteById case got finished >> ");
@@ -104,20 +94,17 @@ public class AssignmentRepositoryTests {
 	@Order(4)
 	public void whenUpdateById() {
 		LOGGER.info("whenUpdateById case got triggered >> ");
-		//given
 		Person p7 = new Person("Test7", "T7");
 		Person p8 = new Person("Test8", "T8");
 		Person p7_book = personRepository.saveAndFlush(p7);
 		personRepository.saveAndFlush(p8);
 		
-		//when
 		Optional<Person> testPerson = personRepository.findById(p7_book.getId());
 		if(testPerson.isPresent()) {
 			Person updateObj = testPerson.get();
 			updateObj.setFirstName("Test7-1");
 			updateObj.setLastName("T7-1");
 			Person p9_book = personRepository.saveAndFlush(updateObj);
-			//then
 			testPerson = personRepository.findById(p9_book.getId());
 			if(testPerson.isPresent()) {
 				assertThat(testPerson.get().getFirstName()).isEqualTo("Test7-1");
@@ -125,7 +112,6 @@ public class AssignmentRepositoryTests {
 				assertThat(false);
 			}
 		} else {
-			//then
 			assertThat(false);
 		}
 		LOGGER.info("whenUpdateById case got finished >> ");

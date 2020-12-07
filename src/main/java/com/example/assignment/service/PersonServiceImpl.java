@@ -28,7 +28,6 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public Person editPerson(long id, Person person) {
-		// TODO Auto-generated method stub
 		LOGGER.info("Editing person object process begins >> Id: {}, Person: {}", id, person);
 		Optional<Person> personData = personRepository.findById(id);
 
@@ -44,7 +43,6 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public boolean deletePerson(long id) {
-		// TODO Auto-generated method stub
 		LOGGER.info("Deletion person process begins >> Person Id: {}", id);
 		Optional<Person> personData = personRepository.findById(id);
 		if (personData.isPresent()) {
@@ -57,7 +55,6 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public List<Person> getPersonsList() {
-		// TODO Auto-generated method stub
 		LOGGER.info("Fetching list of person's process begins >> ");
 		List<Person> persons = new ArrayList<Person>();
 		personRepository.findAll().forEach(persons::add);
@@ -66,7 +63,6 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public Person getPersonById(long id) {
-		// TODO Auto-generated method stub
 		LOGGER.info("Fetching person by Idprocess begins >> ");
 		Optional<Person> person = personRepository.findById(id);
 		return person.get();

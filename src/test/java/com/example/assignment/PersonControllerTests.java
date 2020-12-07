@@ -36,7 +36,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(PersonController.class)
-//@SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(OrderAnnotation.class)
 public class PersonControllerTests {
 	
@@ -100,17 +99,6 @@ public class PersonControllerTests {
         assertNotNull(viaJSON);
         assertNotNull(viaJSON.path("firstName").asText());
 		
-        //Creating person details via XML
-        /*
-		headers.setContentType(MediaType.APPLICATION_XML);
-		personJsonObject = constructJSON("Chalam", "P");
-		request = new HttpEntity<String>(personJsonObject.toString(), headers);
-		String createPersonWithXML = restTemplate.postForObject(addPersonUrl, request, String.class);
-		JsonNode viaXML = objectMapper.readTree(createPersonWithXML);
-		assertNotNull(createPersonWithXML);
-        assertNotNull(viaXML);
-        assertNotNull(viaXML.path("firstName").asText());
-        */
         LOGGER.info("PersonControllerTests::addPerson_Json_Xml Successfully completed >> ");
 	}
 	

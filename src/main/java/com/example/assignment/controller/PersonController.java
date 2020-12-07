@@ -78,7 +78,6 @@ public class PersonController {
 		LOGGER.info("Count of persons service got triggered >> ");
 		try {
 			List<Person> persons = personService.getPersonsList();
-			// persons.add(new Person("DummyFN", "DummyLN"));
 			if (persons.isEmpty()) {
 				LOGGER.info("Count of persons service returns empty >> ");
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
