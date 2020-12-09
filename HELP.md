@@ -31,17 +31,17 @@ $ java -jar target/assignment.jar
 		
 		
 		After that we can execute the following rest services from postman
-POST: http://localhost:9999/assignment/addPerson
+POST: http://localhost:9999/assignment/api/addPerson
 	  Case 1 (JSON): {"firstName":"Simhachalam","lastName":"Pydana"}
 	  Case 2 (XML ): <person>
 			    <firstName>Johnny</firstName>
 			    <lastName>MD</lastName>
 			  </person>
-PUT: http://localhost:9999/assignment/editPerson/{id}
+PUT: http://localhost:9999/assignment/api/editPerson/{id}
 	  {"firstName":"Simhachalam_1","lastName":"Pydana_1"}
 	  
-DELETE: http://localhost:9999/assignment/deletePerson/{id}
-	  http://localhost:9999/assignment/deletePerson/1
+DELETE: http://localhost:9999/assignment/api/deletePerson/{id}
+	  http://localhost:9999/assignment/api/deletePerson/1
 	  
 GET: http://localhost:9999/assignment/api/personsCount
 
